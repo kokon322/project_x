@@ -1,0 +1,24 @@
+name: GitHub Actions for Project_x
+on:
+  push:
+    branches: [ master ]
+  pull_request: 
+    branches: [ master ]
+jobs:
+  Explore-GitHub-Actions:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [ 16.x ]
+    steps:
+      - uses: actions/checkout@3
+      - name: Starting Node.js ${{matrix.node-version}}
+        uses: action/setup-node@3
+        with:
+          node-version: ${{matrix.node-version}}
+      - name: install modules
+        run: npm install
+      - name: build project
+        run: npm build
+      - name: test project
+        run: npm test
