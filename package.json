@@ -81,6 +81,7 @@
       "src/(.*)": "<rootDir>/src/$1"
     },
     "modulePathIgnorePatterns": [
+      "app.module.ts",
       "main.ts"
     ]
   }
