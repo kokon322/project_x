@@ -13,7 +13,7 @@ jobs:
     steps:
       - uses: actions/checkout@3
       - name: Starting Node.js ${{matrix.node-version}}
-        uses: action/setup-node@3
+        uses: actions/setup-node@3
         with:
           node-version: ${{matrix.node-version}}
       - name: install modules
