@@ -15,14 +15,12 @@ import { MongooseConfigService } from './db/MongooseConfigService';
       inject: [PostgresConfigService],
     }),
     MongooseModule.forRootAsync({
-        useClass: MongooseConfigService,
-        inject: [MongooseConfigService],
-      },
-    ),
+      useClass: MongooseConfigService,
+      inject: [MongooseConfigService],
+    }),
   ],
   controllers: [],
   providers: [],
 })
-
 export class AppModule {
 }

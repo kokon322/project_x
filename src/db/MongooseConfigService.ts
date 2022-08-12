@@ -9,7 +9,9 @@ export class MongooseConfigService implements MongooseOptionsFactory {
 
   createMongooseOptions(): MongooseModuleOptions {
     return {
-      uri: `mongodb://${this.configService.get<string>('MONGO_HOST')}/${this.configService.get<string>('PROJECT_NAME')}`,
+      uri: `mongodb://${this.configService.get<string>('MONGO_HOST')}/${this.configService.get<string>(
+        'PROJECT_NAME',
+      )}`,
     };
   }
 }

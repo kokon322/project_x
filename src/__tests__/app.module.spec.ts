@@ -1,12 +1,12 @@
-import { Test, TestingModule } from "@nestjs/testing";
-import { AppModule } from "../app.module";
+import { Test, TestingModule } from '@nestjs/testing';
+import { AppModule } from '../app.module';
 
-describe("AppModule", () => {
+describe('AppModule', () => {
   let testModule: TestingModule;
 
   beforeEach(async () => {
     testModule = await Test.createTestingModule({
-      imports: [AppModule]
+      imports: [AppModule],
     }).compile();
   });
 
@@ -14,8 +14,8 @@ describe("AppModule", () => {
     await testModule.close();
   });
 
-  describe("AppModule test", () => {
-    it("AppModule should be defined", () => {
+  describe('AppModule test', () => {
+    it('AppModule should be defined', () => {
       expect(testModule).toBeDefined();
     });
   });
