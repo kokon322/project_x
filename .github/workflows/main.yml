@@ -11,7 +11,7 @@ jobs:
       matrix:
         node-varsion: [ 16.x ]
     steps:
-      - uses: actions/checkout@3
+      - uses: actions/checkout@v3
       - name: Starting Node.js ${{matrix.node-version}}
         uses: actions/setup-node@v3
         with:
