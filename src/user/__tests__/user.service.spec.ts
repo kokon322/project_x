@@ -6,6 +6,7 @@ import { EmailVerifyEntity } from '../entities/emailVerify.entity';
 import { getRepositoryToken } from '@nestjs/typeorm';
 import { CreateUserDto } from '../dto/createUser.dto';
 import { UpdateUserDto } from '../dto/updateUser.dto';
+import { GetUserByEmailDto } from '../dto/getUserByEmail.dto';
 
 describe('UserService', () => {
   let service: UserService;
@@ -103,7 +104,8 @@ describe('UserService', () => {
   });
 
   it('getUserByEmail should return correct value', async () => {
-    const result = await service.getUserByEmail({ email: '' });
+    const mockUserEmail: GetUserByEmailDto = { email: '' };
+    const result = await service.getUserByEmail(mockUserEmail);
 
     expect(result).toEqual({ user: [{ message: 'mock value from findOne' }] });
     expect(mockUserEntity.findOne).toHaveBeenCalledTimes(1);
@@ -114,6 +116,8 @@ describe('UserService', () => {
     const mockUpdateUser: UpdateUserDto = {
       firstName: '',
       lastName: '',
+      password: '',
+      confirmPassword: '',
     };
     const result = await service.updateUserById(2, mockUpdateUser);
 
