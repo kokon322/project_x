@@ -3,6 +3,7 @@ import { UserController } from '../user.controller';
 import { UserService } from '../user.service';
 import { CreateUserDto } from '../dto/createUser.dto';
 import { UpdateUserDto } from '../dto/updateUser.dto';
+import { UpdateUserPasswordDto } from '../dto/updateUserPassword.dto';
 
 describe('UserController', () => {
   let controller: UserController;
@@ -12,6 +13,7 @@ describe('UserController', () => {
     getUserById: jest.fn(() => ({ message: 'mock value from getUserById' })),
     updateUserById: jest.fn(() => ({ message: 'mock value from updateUserById' })),
     deleteUserById: jest.fn(() => ({ message: 'mock value from deleteUserById' })),
+    updateUserPasswordById: jest.fn(() => ({ message: 'mock value from updateUserPasswordById' })),
   };
 
   beforeEach(async () => {
@@ -95,6 +97,19 @@ describe('UserController', () => {
 
     expect(mockUserService.updateUserById).toHaveBeenCalledTimes(1);
     expect(mockUserService.updateUserById).toHaveBeenCalledWith(2, mockUpdateUser);
+  });
+
+  it('updateUserPasswordById should return correct value', async () => {
+    const mockUpdateUserPasswordDto: UpdateUserPasswordDto = {
+      password: '',
+      confirmPassword: '',
+    };
+    const result = await controller.updateUserPasswordById(2, mockUpdateUserPasswordDto);
+
+    expect(result).toEqual({ message: 'mock value from updateUserPasswordById' });
+
+    expect(mockUserService.updateUserPasswordById).toHaveBeenCalledTimes(1);
+    expect(mockUserService.updateUserPasswordById).toHaveBeenCalledWith(2, mockUpdateUserPasswordDto);
   });
 
   it('deleteUserById should return correct value', async () => {

@@ -11,6 +11,8 @@ import { GetAllUsersResponseInterface } from './types/getAllUsersResponse.interf
 import { UpdateUserDto } from './dto/updateUser.dto';
 import { GetUserByEmailDto } from './dto/getUserByEmail.dto';
 import { GetOneUserInterface } from './types/getOneUser.interface';
+import { UpdateUserPasswordDto } from './dto/updateUserPassword.dto';
+import { InformationMessageResponse } from './types/informationMessageResponse';
 
 @Injectable()
 export class UserService {
@@ -88,14 +90,28 @@ export class UserService {
 
   async updateUserById(userId: number, updateUserDto: UpdateUserDto): Promise<GetOneUserInterface> {
     try {
-      delete updateUserDto.confirmPassword;
       const result = await this.userRepository.createQueryBuilder()
         .update(UserEntity)
         .where({ id: userId })
         .set(updateUserDto)
-        .returning('*')
+        .returning(['id', 'firstName', 'lastName', 'email'])
         .execute();
       return { user: result.raw[0] };
+    } catch (err) {
+      throw new HttpException({
+        status: HttpStatus.BAD_REQUEST,
+        message: [err.message],
+      }, HttpStatus.BAD_REQUEST);
+    }
+  }
+
+  async updateUserPasswordById(userId: number, updateUserPasswordDto: UpdateUserPasswordDto): Promise<InformationMessageResponse> {
+    try {
+      const user = await this.userRepository.findOneBy({ id: userId });
+      user.password = updateUserPasswordDto.password;
+      await this.userRepository.save(user);
+
+      return { message: 'Success' };
     } catch (err) {
       throw new HttpException({
         status: HttpStatus.BAD_REQUEST,

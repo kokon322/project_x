@@ -5,6 +5,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { PostgresConfigService } from './db/PostgresConfigService';
 import { MongooseConfigService } from './db/MongooseConfigService';
 import { UserModule } from './user/user.module';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
@@ -20,6 +21,7 @@ import { UserModule } from './user/user.module';
       inject: [MongooseConfigService],
     }),
     UserModule,
+    AuthModule,
   ],
   controllers: [],
   providers: [],

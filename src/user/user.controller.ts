@@ -7,6 +7,8 @@ import { CreateUserResponseInterface } from './types/createUserResponse.interfac
 import { GetAllUsersResponseInterface } from './types/getAllUsersResponse.interface';
 import { UpdateUserDto } from './dto/updateUser.dto';
 import { GetOneUserInterface } from './types/getOneUser.interface';
+import { UpdateUserPasswordDto } from './dto/updateUserPassword.dto';
+import { InformationMessageResponse } from './types/informationMessageResponse';
 
 @ApiTags('Users')
 @Controller('users')
@@ -43,6 +45,11 @@ export class UserController {
   @Put(':id')
   async updateUserById(@Param('id') id: number, @Body() updateUserDto: UpdateUserDto): Promise<GetOneUserInterface> {
     return await this.userService.updateUserById(id, updateUserDto);
+  }
+
+  @Put('password/:id')
+  async updateUserPasswordById(@Param('id') id: number, @Body() updateUserPasswordDto: UpdateUserPasswordDto): Promise<InformationMessageResponse> {
+    return await this.userService.updateUserPasswordById(id, updateUserPasswordDto);
   }
 
   @ApiParam({ name: 'id', required: true, example: 1 })

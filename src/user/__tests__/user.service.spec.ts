@@ -7,6 +7,7 @@ import { getRepositoryToken } from '@nestjs/typeorm';
 import { CreateUserDto } from '../dto/createUser.dto';
 import { UpdateUserDto } from '../dto/updateUser.dto';
 import { GetUserByEmailDto } from '../dto/getUserByEmail.dto';
+import { UpdateUserPasswordDto } from '../dto/updateUserPassword.dto';
 
 describe('UserService', () => {
   let service: UserService;
@@ -116,14 +117,27 @@ describe('UserService', () => {
     const mockUpdateUser: UpdateUserDto = {
       firstName: '',
       lastName: '',
-      password: '',
-      confirmPassword: '',
     };
     const result = await service.updateUserById(2, mockUpdateUser);
 
     expect(result).toEqual({ user: {} });
     expect(mockUserEntity.createQueryBuilder).toHaveBeenCalledTimes(1);
     expect(mockUserEntity.createQueryBuilder).toHaveBeenCalledWith();
+  });
+
+  it('updateUserPasswordById should return correct value', async () => {
+    const mockUpdateUserPasswordDto: UpdateUserPasswordDto = {
+      password: '',
+      confirmPassword: '',
+    };
+    mockUserEntity.findOneBy = jest.fn().mockImplementation(() => Promise.resolve({}));
+    const result = await service.updateUserPasswordById(2, mockUpdateUserPasswordDto);
+
+    expect(result).toEqual({ message: 'Success' });
+    expect(mockUserEntity.findOneBy).toHaveBeenCalledTimes(1);
+    expect(mockUserEntity.findOneBy).toHaveBeenCalledWith({ id: 2 });
+    expect(mockUserEntity.save).toHaveBeenCalledTimes(1);
+    expect(mockUserEntity.save).toHaveBeenCalledWith({ password: '' });
   });
 
   it('deleteUserById should return correct value', async () => {
